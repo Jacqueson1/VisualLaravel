@@ -73,3 +73,13 @@ footer button:disabled { opacity: .35; cursor: not-allowed; }
 }
 
 .hljs { background: transparent; }
+
+svg { width: 100%; height: auto; display: block; }
+.track { fill: none; stroke: var(--ink); stroke-width: 2; stroke-dasharray: 6 8; opacity: .35; }
+.station polygon { stroke: var(--ink); stroke-width: 2.5; stroke-linejoin: round; }
+.top { fill: #fff; transition: fill .3s; }
+.left { fill: #c6d1dd; }
+.right { fill: #a9b8c9; }
+.station.active .top { fill: #bcd3ff; }
+.name { font-size: 15px; font-weight: 700; fill: var(--ink); }
+.subtext { font-size: 12px; fill: var(--muted); font-family: 'JetBrains Mono', monospace; }

@@ -5,6 +5,7 @@ import sql from 'highlight.js/lib/languages/sql';
 import xml from 'highlight.js/lib/languages/xml';
 import 'highlight.js/styles/tokyo-night-dark.css';
 import { steps } from './steps.js';
+import { buildScene, setActive } from './scene.js';
 
 hljs.registerLanguage('php', php);
 hljs.registerLanguage('sql', sql);
@@ -12,14 +13,16 @@ hljs.registerLanguage('xml', xml);
 
 const $ = (id) => document.getElementById(id);
 let current = 0;
-
+buildScene($('scene'));
 // Build one dot button per step
+
 $('dots').innerHTML = steps
   .map((s, i) => `<button class="dot" data-i="${i}" aria-label="Step ${i + 1}: ${s.title}">${i + 1}</button>`)
   .join('');
 
 function render() {
   const s = steps[current];
+  setActive(s.at);
   $('title').textContent = s.title;
   $('caption').textContent = s.caption;
   $('file').textContent = s.file;
