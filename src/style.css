@@ -71,3 +71,5 @@ footer button:disabled { opacity: .35; cursor: not-allowed; }
   .lesson { grid-template-columns: 1fr; }
   footer button { flex: 1; }
 }
+
+.hljs { background: transparent; }
