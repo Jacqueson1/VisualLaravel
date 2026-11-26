@@ -1,4 +1,5 @@
 import { gsap } from 'gsap';
+const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 const S = 40; // half-width of a cube's top face
 const D = 36; // cube height
@@ -56,16 +57,17 @@ export function setActive(i) {
 export function goTo(step) {
   tl?.kill();
   pkg.classList.remove('failed');
+  const d = reduce ? 0 : 0.9;
   tl = gsap.timeline();
 
-  tl.to(pkg, { ...pos(step.at), duration: 0.9, ease: 'power2.inOut' });
+  tl.to(pkg, { ...pos(step.at), duration: d, ease: 'power2.inOut' });
 
   if (step.fail) {
     tl.add(() => pkg.classList.add('failed'))
       .add(() => setActive(0))
-      .to(pkg, { ...pos(0), duration: 0.9, ease: 'power2.in' }, '+=0.3')
-      .to(pkg, { x: '+=8', repeat: 5, yoyo: true, duration: 0.05 });
+      .to(pkg, { ...pos(0), duration: d, ease: 'power2.in' }, '+=0.3')
+      .to(pkg, { x: '+=8', repeat: 5, yoyo: true, duration: reduce ? 0 : 0.05 });
   }
 
-  tl.to(row, { opacity: step.row ? 1 : 0, duration: 0.4 }, 0.4);
+  tl.to(row, { opacity: step.row ? 1 : 0, duration: reduce ? 0 : 0.4 }, 0.4);
 }

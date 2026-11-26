@@ -1,18 +1,23 @@
 <!doctype html>
 <html lang="en">
+
 <head>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
-  
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;700&family=JetBrains+Mono:wght@400;600&display=swap"
+    rel="stylesheet" />
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>How Laravel creates a post</title>
 </head>
+
 <body>
   <main class="app">
     <header>
-      <h1>How Laravel creates a post</h1>
-      <p class="tagline">Follow one request from the browser to the database.</p>
+      <h1 id="lesson-title"></h1>
+      <p class="tagline" id="tagline"></p>
     </header>
+    <nav id="lessons" aria-label="Lessons"></nav>
 
     <section id="scene"></section>
     <nav id="dots"></nav>
@@ -20,7 +25,7 @@
     <section class="lesson">
       <div class="text">
         <h2 id="title"></h2>
-        <p id="caption"></p>
+        <p id="caption" aria-live="polite"></p>
       </div>
       <div class="code">
         <div id="file"></div>
@@ -35,4 +40,5 @@
   </main>
   <script type="module" src="/src/main.js"></script>
 </body>
+
 </html>

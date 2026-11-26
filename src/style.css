@@ -93,3 +93,15 @@ svg { width: 100%; height: auto; display: block; }
 #pkg.failed .left, #pkg.failed .right { fill: #5e120d; }
 #row rect { fill: #fff; stroke: var(--ink); stroke-width: 2; }
 #row text { font: 12px 'JetBrains Mono', monospace; fill: var(--ink); }
+
+#lessons { display: flex; gap: 8px; margin-bottom: 16px; }
+.tab {
+  padding: 6px 14px;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius);
+  background: var(--panel);
+  color: var(--ink);
+  font-weight: 700;
+  text-decoration: none;
+}
+.tab.current { background: var(--ink); color: var(--panel); }

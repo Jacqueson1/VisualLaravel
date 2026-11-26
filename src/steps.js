@@ -1,4 +1,4 @@
-export const steps = [
+const createSteps = [
     {
         title: 'What is CRUD?',
         at: 0,
@@ -93,4 +93,108 @@ VALUES ('My first post', NOW(), NOW());`
   -> INSERT
   -> redirect('/posts')`
     }
+];
+
+const readSteps = [
+  {
+    title: 'What is Read?',
+    at: 0,
+    file: 'CRUD',
+    lang: 'php',
+    caption: 'Read means fetching data without changing it. Laravel uses GET for it. We will follow a request for the list of posts.',
+    code: `// Read -> GET /posts   (list)
+// Read -> GET /posts/1 (one post)`
+  },
+  {
+    title: 'The browser asks for the page',
+    at: 0,
+    file: 'resources/views/layout.blade.php',
+    lang: 'xml',
+    caption: 'You click a link. The browser sends a GET request to /posts. There is no form and no data to send.',
+    code: `<a href="/posts">All posts</a>`
+  },
+  {
+    title: 'The route matches',
+    at: 1,
+    file: 'routes/web.php',
+    lang: 'php',
+    caption: 'This time Laravel looks for a GET route on /posts. It points to the index method.',
+    code: `Route::get('/posts', [PostController::class, 'index']);`
+  },
+  {
+    title: 'The controller runs index',
+    at: 2,
+    file: 'app/Http/Controllers/PostController.php',
+    lang: 'php',
+    caption: 'index() has one job: collect the data the page needs, then hand it to a view.',
+    code: `public function index()
+{
+    // fetch posts, then show them
+}`
+  },
+  {
+    title: 'The model fetches the posts',
+    at: 3,
+    file: 'app/Http/Controllers/PostController.php',
+    lang: 'php',
+    caption: 'The Post model asks the database for all posts, newest first.',
+    code: `$posts = Post::latest()->get();`
+  },
+  {
+    title: 'The database runs a SELECT',
+    at: 4,
+    file: 'SQL that Eloquent runs',
+    lang: 'sql',
+    caption: 'Nothing is changed. The database only reads rows and returns them.',
+    code: `SELECT * FROM posts
+ORDER BY created_at DESC;`
+  },
+  {
+    title: 'The view receives the data',
+    at: 5,
+    file: 'app/Http/Controllers/PostController.php',
+    lang: 'php',
+    caption: 'The controller passes the posts to a Blade view.',
+    code: `return view('posts.index', compact('posts'));`
+  },
+  {
+    title: 'The view renders the list',
+    at: 5,
+    file: 'resources/views/posts/index.blade.php',
+    lang: 'xml',
+    caption: 'Blade loops over the posts and builds the HTML. That HTML is the response the browser shows.',
+    code: `@foreach ($posts as $post)
+  <h2>{{ $post->title }}</h2>
+@endforeach`
+  },
+  {
+    title: 'Recap',
+    at: 0,
+    file: 'The whole Read flow',
+    lang: 'php',
+    caption: 'GET request, route, controller, model, SELECT, view. Compared with Create: no validation and no INSERT.',
+    code: `GET /posts
+  -> Route
+  -> PostController@index
+  -> Post::latest()->get()
+  -> SELECT
+  -> view('posts.index')`
+  }
+];
+
+export const lessons = [
+  {
+    id: 'create',
+    name: 'Create',
+    title: 'How Laravel creates a post',
+    tagline: 'Follow one request from the browser to the database.',
+    steps: createSteps
+  },
+  {
+    id: 'read',
+    name: 'Read',
+    title: 'How Laravel reads posts',
+    tagline: 'Follow a GET request and see the data come back.',
+    steps: readSteps
+  }
 ];
