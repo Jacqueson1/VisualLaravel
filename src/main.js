@@ -30,6 +30,25 @@ function readHash() {
   current = Math.min(Math.max(i, 0), lesson.steps.length - 1);
 }
 
+// Collect every value learned from step 0 up to the current step
+function statsUpTo(i) {
+  const values = {};
+  for (let k = 0; k <= i; k++) Object.assign(values, lesson.steps[k].set);
+  return values;
+}
+
+function renderStats(s) {
+  const values = statsUpTo(current);
+  $('stats').innerHTML = lesson.chips
+    .map((c) => {
+      const known = values[c.key] !== undefined;
+      const isNew = s.set && s.set[c.key] !== undefined;
+      const cls = `chip${known ? '' : ' unknown'}${isNew ? ' new' : ''}`;
+      return `<div class="${cls}"><span>${c.label}</span><b>${known ? values[c.key] : '?'}</b></div>`;
+    })
+    .join('');
+}
+
 function render() {
   const s = lesson.steps[current];
   document.title = lesson.title;
@@ -56,6 +75,7 @@ function render() {
   $('back').disabled = current === 0;
   $('next').disabled = current === lesson.steps.length - 1;
 
+  renderStats(s);
   setActive(s.at);
   goTo(s);
 }

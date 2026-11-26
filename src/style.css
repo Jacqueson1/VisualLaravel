@@ -105,3 +105,23 @@ svg { width: 100%; height: auto; display: block; }
   text-decoration: none;
 }
 .tab.current { background: var(--ink); color: var(--panel); }
+
+.stats { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+.chip {
+  min-width: 110px;
+  padding: 6px 12px;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius);
+  background: var(--panel);
+}
+.chip span { display: block; font-size: 11px; color: var(--muted); }
+.chip b { font: 600 15px 'JetBrains Mono', monospace; }
+.chip.unknown b { color: var(--muted); }
+.chip.new { background: #fff3c4; animation: pop .3s ease-out; }
+@keyframes pop { from { transform: scale(1.08); } to { transform: scale(1); } }
+@media (prefers-reduced-motion: reduce) { .chip.new { animation: none; } }
+
+.flow polygon { stroke: var(--ink); stroke-width: 2; stroke-linejoin: round; }
+.flow .top { fill: #ffd54a; }
+.flow .left { fill: #e0b72f; }
+.flow .right { fill: #c49b1f; }

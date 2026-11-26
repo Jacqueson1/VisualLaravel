@@ -1,4 +1,5 @@
 import { gsap } from 'gsap';
+
 const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 const S = 40; // half-width of a cube's top face
@@ -13,7 +14,7 @@ const stations = [
   { name: 'View', sub: 'posts list' }
 ].map((s, i) => ({ ...s, x: 110 + i * 136, y: 110 + i * 46 }));
 
-let pkg, row, tl;
+let pkg, row, tl, stream, streamTween;
 const pos = (i) => ({ x: stations[i].x, y: stations[i].y - 40 });
 
 // One isometric cube, centered on (0,0)
@@ -41,10 +42,12 @@ export function buildScene(el) {
         <rect x="-46" y="-12" width="92" height="22" rx="4"/>
         <text text-anchor="middle" y="3">new row</text>
       </g>
+      <g id="stream"></g>
       <g id="pkg">${cube(14, 12)}</g>
     </svg>`;
   pkg = el.querySelector('#pkg');
   row = el.querySelector('#row');
+  stream = el.querySelector('#stream');
   gsap.set(pkg, pos(0));
 }
 
@@ -54,8 +57,35 @@ export function setActive(i) {
   });
 }
 
+function runStream({ from, to, count }) {
+  stream.innerHTML = Array.from({ length: count }, () => `<g class="flow">${cube(10, 9)}</g>`).join('');
+  const els = stream.querySelectorAll('.flow');
+  const a = pos(from);
+  const b = pos(to);
+
+  if (reduce) {
+    // No motion: spread the cubes evenly along the path
+    els.forEach((el, k) => {
+      const t = (k + 1) / (count + 1);
+      gsap.set(el, { x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t });
+    });
+    return;
+  }
+
+  const duration = 1.5;
+  streamTween = gsap.fromTo(
+    els,
+    { ...a, opacity: 0 },
+    { ...b, opacity: 1, duration, ease: 'none', repeat: -1, delay: 0.9, stagger: duration / count }
+  );
+}
+
 export function goTo(step) {
   tl?.kill();
+  streamTween?.kill();
+  stream.innerHTML = '';
+  if (step.stream) runStream(step.stream);
+
   pkg.classList.remove('failed');
   const d = reduce ? 0 : 0.9;
   tl = gsap.timeline();
