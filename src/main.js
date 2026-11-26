@@ -5,7 +5,7 @@ import sql from 'highlight.js/lib/languages/sql';
 import xml from 'highlight.js/lib/languages/xml';
 import 'highlight.js/styles/tokyo-night-dark.css';
 import { steps } from './steps.js';
-import { buildScene, setActive } from './scene.js';
+import { buildScene, setActive, goTo } from './scene.js';
 
 hljs.registerLanguage('php', php);
 hljs.registerLanguage('sql', sql);
@@ -23,6 +23,7 @@ $('dots').innerHTML = steps
 function render() {
   const s = steps[current];
   setActive(s.at);
+  goTo(s);
   $('title').textContent = s.title;
   $('caption').textContent = s.caption;
   $('file').textContent = s.file;

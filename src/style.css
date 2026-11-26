@@ -83,3 +83,13 @@ svg { width: 100%; height: auto; display: block; }
 .station.active .top { fill: #bcd3ff; }
 .name { font-size: 15px; font-weight: 700; fill: var(--ink); }
 .subtext { font-size: 12px; fill: var(--muted); font-family: 'JetBrains Mono', monospace; }
+
+#pkg polygon { stroke: var(--ink); stroke-width: 2.5; stroke-linejoin: round; }
+#pkg .top { fill: var(--accent); }
+#pkg .left { fill: #c4352c; }
+#pkg .right { fill: #a52b23; }
+
+#pkg.failed .top { fill: #8e1b14; }
+#pkg.failed .left, #pkg.failed .right { fill: #5e120d; }
+#row rect { fill: #fff; stroke: var(--ink); stroke-width: 2; }
+#row text { font: 12px 'JetBrains Mono', monospace; fill: var(--ink); }
